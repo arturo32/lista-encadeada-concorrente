@@ -3,10 +3,12 @@
 
 #include <forward_list>
 #include <iostream>
+#include <mutex>
 
 class lista_encadeada {
 	private:
 		std::forward_list<int> lista;
+		std::mutex mtx;
 
 	public:
 		void leLista();

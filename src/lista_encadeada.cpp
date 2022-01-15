@@ -8,10 +8,16 @@ void lista_encadeada::leLista(){
 }
 
 void lista_encadeada::removeElemento(int elemento){
+	mtx.lock();
+
 	this->lista.remove(elemento);
+
+	mtx.unlock();
 }
 
 void lista_encadeada::insereElemento(int elemento){
+	mtx.lock();
+	
 	auto it = this->lista.before_begin();
 	auto it2 = it;
 	while(it != this->lista.end()){
@@ -20,6 +26,7 @@ void lista_encadeada::insereElemento(int elemento){
 			it2 = it;
 		}
 	}
-
 	this->lista.insert_after(it2, elemento);
+	
+	mtx.unlock();
 }

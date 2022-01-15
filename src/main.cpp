@@ -2,31 +2,45 @@
 #include "lista_encadeada.h"
 #include <thread>
 
-
-
+#define T_NUMERO_INSERCAO 6
+#define T_NUMERO_REMOCAO 2
+#define T_NUMERO_BUSCA 2
 
 int main(){
-/*	std::forward_list<int> numeros{2, 3, 5, 6};
-	auto it = numeros.begin();
-	std::cout << *it << std::endl;
-
-
-	std::thread threads[1];*/
-	
+	std::thread threads_insercao[T_NUMERO_INSERCAO];	
+	std::thread threads_remocao[T_NUMERO_REMOCAO];
+	std::thread threads_busca[T_NUMERO_BUSCA];
 
 	lista_encadeada lista;
-	lista.insereElemento(2);
-	lista.insereElemento(3);
-	lista.insereElemento(4);
-	lista.insereElemento(22);
 
-	lista.removeElemento(3);
+	for(int i = 0; i < T_NUMERO_INSERCAO; ++i){
+		threads_insercao[i] = std::thread(&lista_encadeada::insereElemento, &lista, i);	
+	}
+
+	for(int i = 0; i < T_NUMERO_REMOCAO; ++i){
+		threads_remocao[i] = std::thread(&lista_encadeada::removeElemento, &lista, i);	
+	}
+
+	for(int i = 0; i < T_NUMERO_BUSCA; ++i){
+		threads_busca[i] = std::thread(&lista_encadeada::leLista, &lista);	
+	}
+
+	
+
+	for(int i = 0; i < T_NUMERO_INSERCAO; ++i){
+		threads_insercao[i].join();
+	}
+
+	for(int i = 0; i < T_NUMERO_REMOCAO; ++i){
+		threads_remocao[i].join();
+	}
+
+	for(int i = 0; i < T_NUMERO_BUSCA; ++i){
+		threads_busca[i].join();
+	}
 
 	lista.leLista();
+	std::cout << "aaaa" << std::endl;
 
-	//Instancia e inicia as threads para calcular as linhas da matriz produto
-	//threads[0] = std::thread(leLista, numeros);
-	//threads[0].join();
-	
 	return 0;
 }
