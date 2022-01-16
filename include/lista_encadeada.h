@@ -1,6 +1,7 @@
 #ifndef LISTA_ENCADEADA
 #define LISTA_ENCADEADA
 
+#include <algorithm>
 #include <forward_list>
 #include <iostream>
 #include <mutex>
@@ -11,7 +12,7 @@ class lista_encadeada {
 		std::mutex mtx;
 
 	public:
-		void leLista();
+		void buscaElemento(int elemento);
 		void removeElemento(int elemento);
 		void insereElemento(int elemento);
 };

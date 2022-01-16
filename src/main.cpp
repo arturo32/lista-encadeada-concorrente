@@ -13,6 +13,7 @@ int main(){
 
 	lista_encadeada lista;
 
+    //Chamada dos métodos da lista usando threads
 	for(int i = 0; i < T_NUMERO_INSERCAO; ++i){
 		threads_insercao[i] = std::thread(&lista_encadeada::insereElemento, &lista, i);	
 	}
@@ -22,11 +23,11 @@ int main(){
 	}
 
 	for(int i = 0; i < T_NUMERO_BUSCA; ++i){
-		threads_busca[i] = std::thread(&lista_encadeada::leLista, &lista);	
+		threads_busca[i] = std::thread(&lista_encadeada::buscaElemento, &lista , 2);	
 	}
 
 	
-
+    //Aguardando a execução das threads finalizar
 	for(int i = 0; i < T_NUMERO_INSERCAO; ++i){
 		threads_insercao[i].join();
 	}
@@ -38,9 +39,6 @@ int main(){
 	for(int i = 0; i < T_NUMERO_BUSCA; ++i){
 		threads_busca[i].join();
 	}
-
-	lista.leLista();
-	std::cout << "aaaa" << std::endl;
 
 	return 0;
 }
